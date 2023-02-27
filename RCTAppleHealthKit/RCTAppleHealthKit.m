@@ -210,11 +210,11 @@ RCT_EXPORT_METHOD(getStepCount:(NSDictionary *)input callback:(RCTResponseSender
 }
 
 RCT_EXPORT_METHOD(getSamplesFromSource:(NSString *)input
-                  option:(NSDictionary *)option
-                  callback:(RCTResponseSenderBlock)callback)
+                  callback:(RCTResponseSenderBlock)callback
+                  option:(NSDictionary *)option)
 {
     [self _initializeHealthStore];
-    [self fetchSampleFromSource:input option:option callback:callback];
+    [self fetchSampleFromSource:input callback:callback option:option];
 }
 
 RCT_EXPORT_METHOD(getSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)

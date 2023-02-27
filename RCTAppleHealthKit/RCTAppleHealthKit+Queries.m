@@ -193,8 +193,8 @@
 
 
 - (void)fetchSampleFromSource:(NSString *)sourceKey
-                        option:(NSDictionary *)option
-           callback:(RCTResponseSenderBlock)callback {
+           callback:(RCTResponseSenderBlock)callback
+            option:(NSDictionary *)option{
     
     NSUInteger limit = [RCTAppleHealthKit uintFromOptions:option key:@"limit" withDefault:100];
     BOOL ascending = [RCTAppleHealthKit boolFromOptions:option key:@"ascending" withDefault:false];
