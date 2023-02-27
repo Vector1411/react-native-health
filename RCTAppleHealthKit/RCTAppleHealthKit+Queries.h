@@ -19,6 +19,7 @@
 - (void)fetchAllSources:(RCTResponseSenderBlock)callback;
 
 - (void)fetchSampleFromSource:(NSString *)sourceKey
+                        option:(NSDictionary *)option
                      callback:(RCTResponseSenderBlock)callback;
 
 - (void)fetchWorkoutById:(HKSampleType *)quantityType

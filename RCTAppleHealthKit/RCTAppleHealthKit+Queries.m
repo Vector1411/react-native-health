@@ -193,8 +193,14 @@
 
 
 - (void)fetchSampleFromSource:(NSString *)sourceKey
+                        option:(NSDictionary *)option
            callback:(RCTResponseSenderBlock)callback {
-   
+    
+    NSUInteger limit = [RCTAppleHealthKit uintFromOptions:option key:@"limit" withDefault:100];
+    BOOL ascending = [RCTAppleHealthKit boolFromOptions:option key:@"ascending" withDefault:false];
+    NSDate *startDate = [RCTAppleHealthKit dateFromOptions:option key:@"startDate" withDefault:nil];
+    NSDate *endDate = [RCTAppleHealthKit dateFromOptions:option key:@"endDate" withDefault:[NSDate date]];
+    
   NSMutableDictionary *outputData=[[NSMutableDictionary alloc] initWithCapacity:1];
    
   NSMutableArray *sampleTypes = [NSMutableArray arrayWithCapacity:1];
@@ -237,11 +243,16 @@
           dispatch_group_enter(collectDeviceGroup);
            
           NSPredicate *sourcePredicate = [HKQuery predicateForObjectsFromSource:source];
-          NSSortDescriptor *timeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:HKSampleSortIdentifierStartDate ascending:NO];
+            
+            NSPredicate *datePredicate = [RCTAppleHealthKit predicateForSamplesBetweenDates:startDate endDate:endDate];
+            
+            NSPredicate * predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:sourcePredicate,datePredicate,nil]];
+            
+          NSSortDescriptor *timeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:HKSampleSortIdentifierStartDate ascending:ascending];
           HKSampleQuery *query = [[HKSampleQuery alloc] initWithSampleType:sampleType
-                                      predicate:sourcePredicate
+                                      predicate:predicate
 //                                        limit:HKObjectQueryNoLimit
-                                        limit:100
+                                        limit:limit
                                    sortDescriptors:@[timeSortDescriptor]
                                    resultsHandler:^(HKSampleQuery *query, NSArray *results, NSError *error) {
 //            NSMutableDictionary *deviceList=[[NSMutableDictionary alloc] initWithCapacity:1];

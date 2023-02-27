@@ -209,10 +209,12 @@ RCT_EXPORT_METHOD(getStepCount:(NSDictionary *)input callback:(RCTResponseSender
     [self fitness_getStepCountOnDay:input callback:callback];
 }
 
-RCT_EXPORT_METHOD(getSamplesFromSource:(NSString *)input callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(getSamplesFromSource:(NSString *)input
+                  option:(NSDictionary *)option
+                  callback:(RCTResponseSenderBlock)callback)
 {
     [self _initializeHealthStore];
-    [self fetchSampleFromSource:input callback:callback];
+    [self fetchSampleFromSource:input option:option callback:callback];
 }
 
 RCT_EXPORT_METHOD(getSamples:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback)
