@@ -89,6 +89,7 @@
         Boolean isThirdParty = NO;
         NSString *productType = [source valueForKey:@"productType"];
         if([productType length]>0) {
+            printf("========1111========");
 
         } else {
           if([bundleId hasPrefix:@"com.apple.Health"]){
@@ -101,8 +102,13 @@
           } else if([bundleId hasPrefix:@"com.handa.dafit"]) {
               productType=@"Handa Dafit Device";
               isThirdParty=YES;
-          } else
-            isThirdParty=YES;
+          } else if([bundleId hasPrefix:@"com.withings.wiScaleNG"]) {
+              productType=@"Health Mate App";
+              isThirdParty=YES;
+          } else {
+              isThirdParty=YES;
+              printf("================");
+          }
         }
         if(isThirdParty) {
           dispatch_group_enter(collectDeviceGroup);
@@ -129,9 +135,9 @@
                   
                 if([tempDeviceKey length]!=0 && [deviceList objectForKey:tempDeviceKey]==nil){
                   NSDictionary *device = @{
-                    @"name" : deviceName,
-                    @"serialNumber" : serialNumber,
-                    @"manufacturer":manufacturer,
+                      @"name" : deviceName ? deviceName : @"Unknow",
+                      @"serialNumber" : serialNumber ? serialNumber : @"Unknow",
+                      @"manufacturer":manufacturer ? manufacturer : @"Unknow",
                   };
 
                   NSDictionary *elem = @{
