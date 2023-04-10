@@ -56,7 +56,7 @@ export const useHealthKit = (permissions) => {
             /* Called after we receive a response from the system */
 
             if (error) {
-                onPermissionDenied();
+                onPermissionDenied(error);
                 return;
             }
 
@@ -77,7 +77,7 @@ export const useHealthKit = (permissions) => {
         })
     }
 
-    const onPermissionDenied = () => {
+    const onPermissionDenied = (error) => {
 
         console.log('[ERROR] Cannot grant permissions!', error)
         //Show error message
