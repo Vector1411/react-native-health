@@ -1340,7 +1340,9 @@
       return;
     }
 
-    [self sendEventWithName:successEvent body:@{}];
+    // [self sendEventWithName:successEvent body:@{}];
+    [self emitEventWithName:successEvent andPayload:@{}];
+    NSLog(@"Emtting event: %@", successEvent);
 
     completionHandler();
 
@@ -1361,7 +1363,9 @@
 
     [self.healthStore executeQuery:query];
 
-    [self sendEventWithName:successEvent body:@{}];
+    // [self sendEventWithName:successEvent body:@{}];
+    [self emitEventWithName:successEvent andPayload:@{}];
+    NSLog(@"Emtting event: %@", successEvent);
   }];
 }
 
@@ -1394,12 +1398,16 @@
 
       NSLog(@"[HealthKit] An error happened when receiving a new sample - %@", error.localizedDescription);
       if(self.hasListeners) {
-        [self sendEventWithName:failureEvent body:@{}];
+        // [self sendEventWithName:failureEvent body:@{}];
+        [self emitEventWithName:failureEvent andPayload:@{}];
+        NSLog(@"Emtting event Failure: %@", failureEvent);
       }
       return;
     }
     if(self.hasListeners) {
-      [self sendEventWithName:successEvent body:@{}];
+      // [self sendEventWithName:successEvent body:@{}];
+      [self emitEventWithName:successEvent andPayload:@{}];
+      NSLog(@"Emtting event: %@", successEvent);
     }
     completionHandler();
 
@@ -1416,14 +1424,18 @@
     if (error) {
       NSLog(@"[HealthKit] An error happened when setting up background observer - %@", error.localizedDescription);
       if(self.hasListeners) {
-        [self sendEventWithName:failureEvent body:@{}];
+        // [self sendEventWithName:failureEvent body:@{}];
+        NSLog(@"send event failed: %@", failureEvent);
+        [self emitEventWithName:failureEvent andPayload:@{}];
       }
       return;
     }
 
     [self.healthStore executeQuery:query];
     if(self.hasListeners) {
-      [self sendEventWithName:successEvent body:@{}];
+      // [self sendEventWithName:successEvent body:@{}];
+      NSLog(@"Emtting event: %@", successEvent);
+      [self emitEventWithName:successEvent andPayload:@{}];
     }
     }];
 }
