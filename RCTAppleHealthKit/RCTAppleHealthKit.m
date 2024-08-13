@@ -606,8 +606,8 @@ RCT_EXPORT_METHOD(getClinicalRecords:(NSDictionary *)input callback:(RCTResponse
         if(permissions != nil && [permissions objectForKey:@"read"] != nil && [permissions objectForKey:@"write"] != nil){
             NSArray* readPermsArray = [permissions objectForKey:@"read"];
             NSArray* writePermsArray = [permissions objectForKey:@"write"];
-            readPermsArray = [[self getReadPermsFromOptions:readPermsNamesArray] allObjects];
-            writePermsArray = [[self getWritePermsFromOptions:writePermsNamesArray] allObjects];
+            // readPermsArray = [[self getReadPermsFromOptions:readPermsNamesArray] allObjects];
+            // writePermsArray = [[self getWritePermsFromOptions:writePermsNamesArray] allObjects];
             NSSet* readPerms = [self getReadPermsFromOptions:readPermsArray];
             NSSet* writePerms = [self getWritePermsFromOptions:writePermsArray];
 
@@ -728,8 +728,10 @@ RCT_EXPORT_METHOD(getClinicalRecords:(NSDictionary *)input callback:(RCTResponse
         if(permissions != nil && [permissions objectForKey:@"read"] != nil && [permissions objectForKey:@"write"] != nil){
             NSArray* readPermsNamesArray = [permissions objectForKey:@"read"];
             NSArray* writePermsNamesArray = [permissions objectForKey:@"write"];
-            readPermsArray = [self getReadPermsFromOptions:readPermsNamesArray];
-            writePermsArray = [self getWritePermsFromOptions:writePermsNamesArray];
+            // readPermsArray = [self getReadPermsFromOptions:readPermsNamesArray];
+            // writePermsArray = [self getWritePermsFromOptions:writePermsNamesArray];
+            readPermsArray = [[self getReadPermsFromOptions:readPermsNamesArray] allObjects];
+            writePermsArray = [[self getWritePermsFromOptions:writePermsNamesArray] allObjects];
         } else {
             callback(@[RCTMakeError(@"permissions must be included in permissions object with read and write options", nil, nil)]);
             return;
