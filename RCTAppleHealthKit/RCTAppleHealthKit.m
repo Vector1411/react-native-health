@@ -603,7 +603,7 @@ RCT_EXPORT_METHOD(getClinicalRecords:(NSDictionary *)input callback:(RCTResponse
 
         // get permissions from input object provided by JS options argument
         NSDictionary* permissions =[input objectForKey:@"permissions"];
-        if(permissions != nil && [permissions objectForKey:@"read"] != nil && [permissions objectForKey:@"write"] != nil){
+        if(permissions != nil){
             NSArray* readPermsArray = [permissions objectForKey:@"read"];
             NSArray* writePermsArray = [permissions objectForKey:@"write"];
             // readPermsArray = [[self getReadPermsFromOptions:readPermsNamesArray] allObjects];
@@ -632,7 +632,7 @@ RCT_EXPORT_METHOD(getClinicalRecords:(NSDictionary *)input callback:(RCTResponse
         [self.healthStore requestAuthorizationToShareTypes:writeDataTypes readTypes:readDataTypes completion:^(BOOL success, NSError *error) {
             if (!success) {
                 NSString *errMsg = [NSString stringWithFormat:@"Error with HealthKit authorization: %@", error];
-                NSLog(errMsg);
+                NSLog(@"%@",errMsg);
                 callback(@[RCTMakeError(errMsg, nil, nil)]);
                 return;
             } else {
